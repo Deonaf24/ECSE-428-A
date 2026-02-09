@@ -42,6 +42,15 @@ class Engine:
             self.stack.push((real, imag))
             return None
         
+        elif cmd == "div":
+            x = self.stack.pop()  # divisor (top)
+            y = self.stack.pop()
+
+            real = y[0] / x[0]
+
+            self.stack.push((real, 0))
+            return None
+        
         else: 
             raise Exception(INVALID_TOKEN)
     
