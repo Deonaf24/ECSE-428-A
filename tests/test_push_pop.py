@@ -1,6 +1,7 @@
-from src.stack import Stack
+from src.engine import Engine
 
-def test_push_pop():
-    s = Stack()
-    s.push(5)
-    assert s.pop() == 5
+# T-PUSH-REAL1
+def test_push_real_then_pop_prints_canonical():
+    c = Engine()
+    c.execute("push 5")
+    assert c.execute("pop") == "5 + j0"
