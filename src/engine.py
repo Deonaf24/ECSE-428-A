@@ -14,14 +14,19 @@ class Engine:
         cmd = args[0].lower()
 
         if cmd == "push":
-            if len(args) != 2:
+            #push <token>  OR  push <a> <+|-> j <b>
+            if len(args) == 2:
+                token = args[1]
+            elif len(args) == 5 and args[2] in {"+", "-"} and args[3].lower() == "j":
+                token = f"{args[1]}{args[2]}j{args[4]}"  # "3+j4" or "3-j4"
+            else:
                 raise Exception(INVALID_TOKEN)
-            # hardcoding imaginary numbers because this is the first test
+
             try:
-                r, i = _parse_number(args[1])
+                r, i = _parse_number(token)
             except ValueError:
                 raise Exception(INVALID_TOKEN)
-            
+
             self.stack.push((r, i))
             return None
         
@@ -31,6 +36,27 @@ class Engine:
             i = 0.0 if i == -0.0 else i
             sign = "+" if i >= 0 else "-"
             return f"{_format_number(r)} {sign} j{_format_number(abs(i))}"
+        
+        elif cmd == "add":
+            # need two values on stack
+            if len(self.stack.data) < 2:
+                raise Exception(STACK_UNDERFLOW)
+
+            x_r, x_i = self.stack.pop()
+            y_r, y_i = self.stack.pop()
+
+            self.stack.push((y_r + x_r, y_i + x_i))
+            return None
+        
+        elif cmd == "sub":
+            if len(self.stack.data) < 2:
+                raise Exception(STACK_UNDERFLOW)
+
+            x_r, x_i = self.stack.pop()
+            y_r, y_i = self.stack.pop()
+
+            self.stack.push((y_r - x_r, y_i - x_i))
+            return None
 
         elif cmd == "mul":
             x = self.stack.pop()
