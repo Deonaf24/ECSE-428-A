@@ -45,10 +45,12 @@ class Engine:
         elif cmd == "div":
             x = self.stack.pop()  # divisor (top)
             y = self.stack.pop()
+            
+            denominator = x[0] * x[0] + x[1] * x[1]
+            real = (y[0] * x[0] + y[1] * x[1]) / denominator
+            imag = (y[1] * x[0] - y[0] * x[1]) / denominator
 
-            real = y[0] / x[0]
-
-            self.stack.push((real, 0))
+            self.stack.push((real, imag))
             return None
         
         else: 
