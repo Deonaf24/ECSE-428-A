@@ -1,5 +1,5 @@
 from src.stack import Stack
-from src.errors import INVALID_TOKEN
+from src.errors import INVALID_TOKEN, STACK_UNDERFLOW
 
 class Engine:
 
@@ -25,14 +25,27 @@ class Engine:
             self.stack.push((r, i))
             return None
         
-        if cmd == "pop":
+        elif cmd == "pop":
             r, i = self.stack.pop()
             r = 0.0 if r == -0.0 else r
             i = 0.0 if i == -0.0 else i
             sign = "+" if i >= 0 else "-"
             return f"{_format_number(r)} {sign} j{_format_number(abs(i))}"
+
+        elif cmd == "mul":
+            if len(self.stack.data) < 2:
+                raise Exception(STACK_UNDERFLOW)
+            x = self.stack.pop()
+            y = self.stack.pop()
+
+            real = y[0] * x[0] - y[1] * x[1]
+            imag = y[0] * x[1] + y[1] * x[0]
+
+            self.stack.push((real, imag))
+            return None
         
-        raise Exception(INVALID_TOKEN)
+        else: 
+            raise Exception(INVALID_TOKEN)
     
 def _format_number(x: float) -> str:
     if x.is_integer():
