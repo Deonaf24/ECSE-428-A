@@ -33,8 +33,6 @@ class Engine:
             return f"{_format_number(r)} {sign} j{_format_number(abs(i))}"
 
         elif cmd == "mul":
-            if len(self.stack.data) < 2:
-                raise Exception(STACK_UNDERFLOW)
             x = self.stack.pop()
             y = self.stack.pop()
 
