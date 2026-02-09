@@ -37,8 +37,9 @@ class Engine:
             y = self.stack.pop()
 
             real = y[0] * x[0] - y[1] * x[1]
+            imag = y[0] * x[1] + y[1] * x[0]
 
-            self.stack.push((real, 0))
+            self.stack.push((real, imag))
             return None
         
         else: 
