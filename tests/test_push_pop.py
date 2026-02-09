@@ -15,3 +15,9 @@ def test_pop_stack_underflow():
         assert False, "Expected stack underflow"
     except Exception as e:
         assert str(e) == STACK_UNDERFLOW
+
+#T-PUSH-CPLX1
+def test_push_complex_compact_then_pop():
+    c = Engine()
+    c.execute("push -2.5-j0.25")
+    assert c.execute("pop") == "-2.5 - j0.25"
