@@ -1,5 +1,5 @@
 from src.stack import Stack
-from src.errors import INVALID_TOKEN, STACK_UNDERFLOW
+from src.errors import INVALID_TOKEN, STACK_UNDERFLOW, DIVISION_BY_ZERO
 
 class Engine:
 
@@ -58,11 +58,7 @@ class Engine:
             self.stack.push((y_r - x_r, y_i - x_i))
             return None
 
-
-
         elif cmd == "mul":
-            if len(self.stack.data) < 2:
-                raise Exception(STACK_UNDERFLOW)
             x = self.stack.pop()
             y = self.stack.pop()
 
@@ -70,6 +66,24 @@ class Engine:
             imag = y[0] * x[1] + y[1] * x[0]
 
             self.stack.push((real, imag))
+            return None
+        
+        elif cmd == "div":
+            x = self.stack.pop()  # divisor (top)
+            y = self.stack.pop()
+            
+            denominator = x[0] * x[0] + x[1] * x[1]
+            if denominator == 0:
+                raise Exception(DIVISION_BY_ZERO)
+            
+            real = (y[0] * x[0] + y[1] * x[1]) / denominator
+            imag = (y[1] * x[0] - y[0] * x[1]) / denominator
+
+            self.stack.push((real, imag))
+            return None
+
+        elif cmd == 'delete':
+            self.stack.pop()
             return None
         
         else: 

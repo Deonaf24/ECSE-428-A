@@ -21,3 +21,12 @@ def test_mul_cplx1():
     engine.execute("mul")
     result = engine.execute("pop")
     assert result == "11 + j2"
+
+# T-MUL-ERR1
+def test_mul_err1():
+    """T-MUL-ERR1: mul with empty stack raises stack underflow"""
+    engine = Engine()
+    with pytest.raises(Exception) as exc_info:
+        engine.execute("mul")
+    assert str(exc_info.value) == STACK_UNDERFLOW
+
