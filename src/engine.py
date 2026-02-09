@@ -55,6 +55,10 @@ class Engine:
 
             self.stack.push((real, imag))
             return None
+
+        elif cmd == 'delete':
+            self.stack.pop()
+            return None
         
         else: 
             raise Exception(INVALID_TOKEN)
