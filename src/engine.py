@@ -36,6 +36,18 @@ class Engine:
             i = 0.0 if i == -0.0 else i
             sign = "+" if i >= 0 else "-"
             return f"{_format_number(r)} {sign} j{_format_number(abs(i))}"
+        
+        elif cmd == "add":
+            # need two values on stack
+            if len(self.stack.data) < 2:
+                raise Exception(STACK_UNDERFLOW)
+
+            x_r, x_i = self.stack.pop()
+            y_r, y_i = self.stack.pop()
+
+            self.stack.push((y_r + x_r, y_i + x_i))
+            return None
+
 
         elif cmd == "mul":
             if len(self.stack.data) < 2:
