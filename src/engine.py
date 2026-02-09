@@ -1,5 +1,5 @@
 from src.stack import Stack
-from src.errors import INVALID_TOKEN, STACK_UNDERFLOW
+from src.errors import INVALID_TOKEN, STACK_UNDERFLOW, DIVISION_BY_ZERO
 
 class Engine:
 
@@ -47,6 +47,9 @@ class Engine:
             y = self.stack.pop()
             
             denominator = x[0] * x[0] + x[1] * x[1]
+            if denominator == 0:
+                raise Exception(DIVISION_BY_ZERO)
+            
             real = (y[0] * x[0] + y[1] * x[1]) / denominator
             imag = (y[1] * x[0] - y[0] * x[1]) / denominator
 
