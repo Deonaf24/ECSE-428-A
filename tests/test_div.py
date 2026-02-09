@@ -21,3 +21,13 @@ def test_div_cplx1():
     engine.execute("div")
     result = engine.execute("pop")
     assert result == "3 - j1"
+
+# T-DIV-ERR1
+def test_div_err1():
+    """T-DIV-ERR1: Division by zero (real) raises error"""
+    engine = Engine()
+    engine.execute("push 1")
+    engine.execute("push 0")
+    with pytest.raises(Exception) as exc_info:
+        engine.execute("div")
+    assert str(exc_info.value) == DIVISION_BY_ZERO
