@@ -47,6 +47,17 @@ class Engine:
 
             self.stack.push((y_r + x_r, y_i + x_i))
             return None
+        
+        elif cmd == "sub":
+            if len(self.stack.data) < 2:
+                raise Exception(STACK_UNDERFLOW)
+
+            x_r, x_i = self.stack.pop()
+            y_r, y_i = self.stack.pop()
+
+            self.stack.push((y_r - x_r, y_i - x_i))
+            return None
+
 
 
         elif cmd == "mul":
