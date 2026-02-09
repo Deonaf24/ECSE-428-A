@@ -31,3 +31,12 @@ def test_div_err1():
     with pytest.raises(Exception) as exc_info:
         engine.execute("div")
     assert str(exc_info.value) == DIVISION_BY_ZERO
+
+def test_div_err2():
+    """T-DIV-ERR2: Division by zero (complex) raises error"""
+    engine = Engine()
+    engine.execute("push 1+j0")
+    engine.execute("push 0+j0")
+    with pytest.raises(Exception) as exc_info:
+        engine.execute("div")
+    assert str(exc_info.value) == DIVISION_BY_ZERO
