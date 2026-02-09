@@ -21,3 +21,9 @@ def test_push_complex_compact_then_pop():
     c = Engine()
     c.execute("push -2.5-j0.25")
     assert c.execute("pop") == "-2.5 - j0.25"
+
+# T-PUSH-CPLX2 
+def test_push_complex_spaced_then_pop(): 
+    c = Engine() 
+    c.execute("push 3 + j 4") 
+    assert c.execute("pop") == "3 + j4"
